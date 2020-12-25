@@ -16,13 +16,14 @@ def load_data_regression():
   # print(Boston.feature_names)
   x = Boston.data   #shape:(506, 13)
   y = Boston.target   #shape:(506,)
+  
+  #将第3列转化为one-hot编码格式
   x3 = x[:,3]
   x4 = pd.get_dummies(x3)
   x = np.delete(x,3,1)
   x = np.column_stack((x,x4[0].values.tolist()))
   x = np.column_stack((x,x4[1].values.tolist()))
 
-  diabetes = datasets.load_diabetes() #使用 scikit-learn 自带的一个糖尿病病人的数据集
   # 拆分成训练集和测试集，测试集大小为原始数据集大小的 1/4
   return train_test_split(x,y,test_size = 0.25,random_state = 0)#分割数据集为训练集与测试集
 
