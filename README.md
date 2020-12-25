@@ -6,6 +6,7 @@ python 3.9
 numpy 1.19.3
 pandas 1.0.5
 scikit learn 0.23.1
+matplotlib 3.2.2
 
 DATASETS
 Boston房价回归预测数据集，使用sklearn库中datasets.load_boston()方法获取
