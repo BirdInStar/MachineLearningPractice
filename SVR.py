@@ -5,6 +5,20 @@ import matplotlib.pyplot as plt
 from sklearn import datasets, linear_model,svm
 from sklearn.model_selection import train_test_split
 
+def maxminnorm(array):
+    '''
+    归一化处理
+    '''
+    maxcols=array.max(axis=0)
+    mincols=array.min(axis=0)
+    data_shape = array.shape
+    data_rows = data_shape[0]
+    data_cols = data_shape[1]
+    t=np.empty((data_rows,data_cols))
+    for i in range(data_cols):
+        t[:,i]=(array[:,i]-mincols[i])/(maxcols[i]-mincols[i])
+    return t
+
 def load_data_regression():
   '''
   加载用于回归问题的数据集
@@ -24,21 +38,13 @@ def load_data_regression():
   x = np.column_stack((x,x4[0].values.tolist()))
   x = np.column_stack((x,x4[1].values.tolist()))
 
+  #其他列进行归一化处理
+  x = maxminnorm(x)
+
   # 拆分成训练集和测试集，测试集大小为原始数据集大小的 1/4
   return train_test_split(x,y,test_size = 0.25,random_state = 0)#分割数据集为训练集与测试集
-
-#支持向量机非线性回归SVR模型
-def test_SVR_linear(*data):
-  X_train,X_test,y_train,y_test=data
-  regr=svm.SVR(kernel='linear')
-  regr.fit(X_train,y_train)
-  print('Coefficients:%s, intercept %s'%(regr.coef_,regr.intercept_))
-  print('Score: %.2f' % regr.score(X_test, y_test))
   
-# 生成用于回归问题的数据集
-X_train,X_test,y_train,y_test=load_data_regression() 
-# 调用 test_LinearSVR
-test_SVR_linear(X_train,X_test,y_train,y_test)
+
 
 def test_SVR_poly(*data):
   '''
@@ -64,12 +70,9 @@ def test_SVR_poly(*data):
   #plt.set_ylim(-1,1.)
   plt.legend(loc="best",framealpha=0.5)
     
-  
-    
   plt.show()
   
-# 调用 test_SVR_poly
-test_SVR_poly(X_train,X_test,y_train,y_test)
+
 
 
 def test_SVR_rbf(*data):
@@ -96,8 +99,6 @@ def test_SVR_rbf(*data):
   ax.legend(loc="best",framealpha=0.5)
   plt.show()
   
-# 调用 test_SVR_rbf
-test_SVR_rbf(X_train,X_test,y_train,y_test)
 
 def test_SVR_sigmoid(*data):
   '''
@@ -127,5 +128,17 @@ def test_SVR_sigmoid(*data):
   ax.legend(loc="best",framealpha=0.5)
   plt.show()
   
-# 调用 test_SVR_sigmoid
-test_SVR_sigmoid(X_train,X_test,y_train,y_test)
+
+for i in range(3):
+    #交叉进行3次划分数据集、训练
+    # 生成用于回归问题的数据集
+    X_train,X_test,y_train,y_test=load_data_regression() 
+
+    # 调用 test_SVR_poly
+    test_SVR_poly(X_train,X_test,y_train,y_test)
+
+    # 调用 test_SVR_rbf
+    test_SVR_rbf(X_train,X_test,y_train,y_test)
+
+    # 调用 test_SVR_sigmoid
+    test_SVR_sigmoid(X_train,X_test,y_train,y_test)
