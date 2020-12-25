@@ -13,6 +13,6 @@ Boston房价回归预测数据集，使用sklearn库中datasets.load_boston()方
 
 ## CODE REFERENCE
 ### 参考代码 
-python 机器学习之支持向量机非线性回归SVR模型
-作者 吴裕雄 
-地址 https://www.cnblogs.com/tszr/p/10799437.html
+- 标题 python机器学习之支持向量机非线性回归SVR模型
+- 作者 吴裕雄 
+- 地址 https://www.cnblogs.com/tszr/p/10799437.html
